@@ -79,7 +79,7 @@ def news(request):
         'link_to_avatar': link_to_avatar,
         'time': time,
     }
-    return render(request, 'blog/news.html', context)
+    return render(request, 'blog/articles/index.html', context)
 
 
 def show_article(request, article_id):
@@ -87,7 +87,7 @@ def show_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     comments = article.comments_set.all()
     form = AddCommentForm()
-    return render(request, 'blog/article.html', {'article': article,
+    return render(request, 'blog/articles/show.html', {'article': article,
                                                  'comments': comments,
                                                  'link_to_avatar': link_to_avatar,
                                                  'form': form,
@@ -96,14 +96,14 @@ def show_article(request, article_id):
 
 def my_show(request):
     link_to_avatar = check_if_avatar_exists(request)
-    return render(request, 'blog/my.html', {'link_to_avatar': link_to_avatar})
+    return render(request, 'blog/user/my.html', {'link_to_avatar': link_to_avatar})
 
 
 def my_news(request):
     # articles = Article.objects.filter(user_id=request.user.id)
     articles = request.user.article_set.order_by('-id')
     link_to_avatar = check_if_avatar_exists(request)
-    return render(request, 'blog/my_news.html', {'link_to_avatar': link_to_avatar, 'articles': articles})
+    return render(request, 'blog/user/my_news.html', {'link_to_avatar': link_to_avatar, 'articles': articles})
 
 
 def my_edit(request):
@@ -115,7 +115,7 @@ def my_edit(request):
             return HttpResponseRedirect('/')
     else:
         form = EditProfileForm(instance=request.user)
-    return render(request, 'blog/my_edit.html', {'form': form, 'link_to_avatar': link_to_avatar})
+    return render(request, 'blog/user/edit.html', {'form': form, 'link_to_avatar': link_to_avatar})
 
 
 def my_edit_avatar(request):
@@ -152,7 +152,7 @@ def my_edit_avatar(request):
             return HttpResponseRedirect('/my/edit/avatar/success/')
     else:
         form = AvatarForm()
-    return render(request, 'blog/edit_avatar.html', {'form': form,
+    return render(request, 'blog/user/edit_avatar.html', {'form': form,
                                                      'avatar_exist': avatar_exist,
                                                      'avatar_size': avatar_size,
                                                      'link_to_avatar': link_to_avatar,
@@ -160,7 +160,7 @@ def my_edit_avatar(request):
 
 
 def my_edit_avatar_success(request):
-    return render(request, 'blog/edit_avatar_success.html')
+    return render(request, 'blog/user/edit_avatar_success.html')
 
 
 def my_delete(request):
@@ -172,7 +172,7 @@ def my_delete(request):
 def get_login(request):
     c = {}
     c.update(csrf(request))
-    return render(request, 'blog/login.html', c)
+    return render(request, 'blog/auth/login.html', c)
 
 
 def post_login(request):
@@ -199,12 +199,12 @@ def get_register(request):
     else:
         form = MyRegForm()
 
-    return render(request, 'blog/register.html', {'form': form})
+    return render(request, 'blog/auth/register.html', {'form': form})
 
 
 def register_success(request):
     link_to_avatar = check_if_avatar_exists(request)
-    return render(request, 'blog/register_success.html', {'link_to_avatar': link_to_avatar})
+    return render(request, 'blog/auth/register_success.html', {'link_to_avatar': link_to_avatar})
 
 
 def get_logout(request):
@@ -214,7 +214,7 @@ def get_logout(request):
 
 def login_success(request):
     link_to_avatar = check_if_avatar_exists(request)
-    return render(request, 'blog/login_success.html', {'link_to_avatar': link_to_avatar})
+    return render(request, 'blog/auth/login_success.html', {'link_to_avatar': link_to_avatar})
 
 
 def add_comment_article(request, article_id):
@@ -232,16 +232,16 @@ def add_comment_article(request, article_id):
 def user_profile(request, username):
     link_to_avatar = check_if_avatar_exists(request)
     user = get_object_or_404(User, username=username)
-    return render(request, 'blog/user_profile.html', {'user': user,
-                                                      'link_to_avatar': link_to_avatar,
-                                                      })
+    return render(request, 'blog/user/show.html', {'user': user,
+                                                           'link_to_avatar': link_to_avatar,
+                                                           })
 
 
 def user_articles(request, username):
     link_to_avatar = check_if_avatar_exists(request)
     user = get_object_or_404(User, username=username)
     articles = user.article_set.all()
-    return render(request, 'blog/user_articles.html', {'user': user,
+    return render(request, 'blog/user/user_articles.html', {'user': user,
                                                        'link_to_avatar': link_to_avatar,
                                                        'articles': articles,
                                                        })
@@ -251,7 +251,7 @@ def user_comments(request, username):
     link_to_avatar = check_if_avatar_exists(request)
     user = get_object_or_404(User, username=username)
     comments = user.comments_set.all()
-    return render(request, 'blog/user_comments.html', {'user': user,
+    return render(request, 'blog/user/user_comments.html', {'user': user,
                                                        'link_to_avatar': link_to_avatar,
                                                        'comments': comments,
                                                        })
