@@ -1,0 +1,49 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+    Contact
+{% endblock %}
+
+{% block content %}
+    <h1>Оставить отзыв</h1>
+    <ol class="breadcrumb">
+        <li><a href="{% url 'home' %}">Главная</a></li>
+        <li class="active">Контакты</li>
+    </ol>
+    <hr>
+    <form class="form-horizontal" role="form" method="post" action="">
+       {% csrf_token %}
+        <div class="form-group">
+            <label class="col-md-2 control-label">Ваше имя *</label>
+
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="full_name"
+                       value="" >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Ваш E-Mail *</label>
+
+            <div class="col-md-6">
+                <input type="email" class="form-control" name="email"
+                       value="" >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Ваше сообщение *</label>
+
+            <div class="col-md-6">
+                            <textarea class="form-control"
+                                      name="message" rows="3" value="" ></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6 col-md-offset-2 text-center">
+                <input type="submit" class="btn btn-primary" name="submit" value="Отправить">
+            </div>
+        </div>
+    </form>
+{% endblock %}

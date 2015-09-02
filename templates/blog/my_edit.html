@@ -1,0 +1,46 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block title %}
+    Редактирование профиля
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+        <h1>Редактирование личных данных</h1>
+        <ol class="breadcrumb">
+                    <li><a href="{% url 'home' %}">Главная</a></li>
+                    <li><a href="{% url 'my_show' %}">Личный кабинет</a></li>
+                    <li class="active">Редактирование личных данных</li>
+                </ol>
+        <hr>
+        <div class="col-md-6 col-sm-10 col-xs-12">
+            {% bootstrap_messages %}
+            <form class="form-horizontal" role="form" method="POST" action="/my/edit/" method="post">
+                {% csrf_token %}
+                {% if form.errors %}
+                            <div class="col-md-12">
+                                <div class="panel-body">
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {{ form.errors }}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                {% bootstrap_form form %}
+
+                <div class="form-group">
+                        <div class="col-md-6 col-md-offset-4">
+                            <input type="submit" class="btn btn-primary btn-lg" name="submit" value="Редактировать!">
+                        </div>
+                    </div>
+            </form>
+        </div>
+    {% else %}
+        <h1 class="text-center">Вы не вошли на сайт!</h1>
+    {% endif %}
+{% endblock %}

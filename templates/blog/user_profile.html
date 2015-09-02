@@ -1,0 +1,82 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+{% block title %}
+    Просмотр профиля {{ user.username }}
+{% endblock %}
+
+{% block content %}
+
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+            <h1>{{ user.username }}</h1>
+
+            <ul class="nav nav-tabs">
+              <li role="presentation" class="active">
+                <a href="{% url 'user_profile' user.username %}">Профиль</a>
+              </li>
+              <li role="presentation">
+                  <a href="{% url 'user_articles' user.username %}">Публикации <span class="badge">{{ user.article_set.count }}</span></a>
+              </li>
+              <li role="presentation">
+                  <a href="{% url 'user_comments' user.username %}">Комментарии <span class="badge">{{ user.comments_set.count }}</span></a>
+              </li>
+              <li role="presentation">
+                <a href="#">Избранное <span style="color: gray;"></span></a>
+              </li>
+            </ul>
+                <h1><small>{{ user.username }}</small></h1>
+                <div class="row">
+                    <div class="user_info_block col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5">
+                            <h3>
+                                <small>Зарегистрирован:</small>
+                            </h3>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-7">
+                            <h3>
+                                <small> {{user.date_joined }} </small>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="user_info_block col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5">
+                            <h3>
+                                <small>Email:</small>
+                            </h3>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-7">
+                            <h3>
+                                <small> {{ user.email }}</small>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="user_info_block col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5">
+                            <h3>
+                                <small>Телефон:</small>
+                            </h3>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-7">
+                            <h3>
+                                <small> {{ user.phone }}</small>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="user_info_block col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5">
+                            <h3>
+                                <small>Дата рождения:</small>
+                            </h3>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-7">
+                            <h3>
+                                <small> {{ user.date_of_birth }}</small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+{% endblock %}

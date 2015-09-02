@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+
+{%  block title %}
+About
+{% endblock %}
+
+{%  block content %}
+<h1>Эта страница Эбаут</h1>
+     <div class="starter-template">
+        <p class="lead">
+            {% if user.is_authenticated %}
+                С возвращением,{{ user.username }}
+             {% else %}
+                Добро пожаловать!<br><a href="#">Зарегистрируйтесь</a> или <a href="{% url 'get_login' %}"> войдите</a> на сайт.
+            {% endif %}
+        </p>
+    </div>
+{% endblock %}

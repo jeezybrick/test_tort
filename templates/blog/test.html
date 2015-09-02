@@ -1,0 +1,74 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap3 %}
+{%  block title %}
+Get,Post тест
+{% endblock %}
+
+{%  block content %}
+    {% if user.is_staff %}
+        <h1>Get,Post тест</h1>
+        <hr />
+        <div class="col-lg-12">
+        {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{% if message.tags %}{{ message.tags }}{% elif message.extra_tags %}{{ message.extra_tags }}{% endif %}" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{ message | upper }}
+                    </div>
+                {% endfor %}
+        {% endif %}
+        </div>
+        {% if form.errors %}
+            <div class="col-md-12">
+                <div class="panel-body">
+                    <div class="alert alert-danger">
+                        <ul>
+                            {{ form.errors }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div class="col-lg-12 text-center lead">
+            {{ request.get_full_path | linebreaks }}
+
+            {% for items in info.keys %}
+                {{ items |linenumbers}}
+            {% endfor %}
+
+            {{ linebreaks }}
+            {{ info | default_if_none:"nothing" | linebreaks }}
+            {{ none_var | default_if_none:"Var is None" | default:"Var is False" }}
+        </div>
+        <form id="sort_form" method="post" action="/test/">
+        {% csrf_token %}
+            <div class="col-lg-5 col-md-5 col-sm-5 text-center" style="border-right: 1px dotted #808080;min-height: 140px;">
+                    <div class="btn-group" data-toggle="buttons">
+                      <label class="btn btn-primary active">
+                        <input type="checkbox" autocomplete="off" value="2" name="sort" checked> 4-6 ГБ
+                      </label>
+                      <label class="btn btn-primary">
+                        <input type="checkbox" autocomplete="off" value="Windows_8" name="sort"> Windows 8
+                      </label>
+                      <label class="btn btn-primary">
+                        <input type="checkbox" autocomplete="off" value="Asus" name="sort"> Asus
+                      </label>
+                    </div>
+            </div>
+             <div class="col-lg-7 col-md-7 col-sm-7 text-center">
+
+                     {% csrf_token %}
+                     {% bootstrap_form form %}
+
+             </div>
+        <div class="col-lg-12 text-center">
+            {% bootstrap_button "Послать" button_type="submit" button_class="btn-primary" size="lg" %}
+        </div>
+        </form>
+        {# Блок для Andular #}
+            {% verbatim %}
+                {{  }}
+            {% endverbatim %}
+        {# !Блок для Andular #}
+    {% endif %}
+{% endblock %}

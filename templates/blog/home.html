@@ -1,0 +1,85 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+
+
+      {% if user.is_authenticated %}
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            <div class="col-lg-5 col-lg-push-3 col-md-8 col-md-push-4 col-sm-7 col-sm-push-5 col-xs-12">
+                <h2 style="margin-top: 0">
+                     {{ user.get_full_name}}
+                </h2>
+
+                <div class="row">
+                    <div class="user_info_block col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                            <h3>
+                                <small>Ваш логин:</small>
+                            </h3>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+                            <h3>
+                                <small> {{ user.username |truncatechars:20 }} </small>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="user_info_block col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                            <h3>
+                                <small>Email:</small>
+                            </h3>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+                            <h3>
+                                <small> {{ user.email |truncatechars:20}}</small>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="user_info_block col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                            <h3>
+                                <small>Телефон:</small>
+                            </h3>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+                            <h3>
+                                <small> {{ user.phone |truncatechars:20 }}</small>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="user_info_block col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
+                            <h3>
+                                <small>Дата рождения:</small>
+                            </h3>
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+                            <h3>
+                                <small> {{ user.date_of_birth |date|truncatechars:20}}</small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div id="avatar_on_index" class="col-lg-3 col-lg-pull-5 col-md-4 col-md-pull-8 col-sm-5 col-sm-pull-7 col-xs-12 text-center">
+                <img src="{% static link_to_avatar %}"
+                     class="img-rounded img-responsive" alt="Avatar">
+            </div>
+        </div>
+      {% else %}
+                 <div class="starter-template">
+                     <p class="lead animated zoomIn">
+                        Добро пожаловать!<br><a href="{% url 'get_register' %}">Зарегистрируйтесь</a> или <a href="{% url 'get_login' %}"> войдите</a> на сайт.
+                     </p>
+                 </div>
+      {% endif %}
+
+{% endblock %}

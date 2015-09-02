@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+{%  block title %}
+Мои новости
+{% endblock %}
+
+{%  block content %}
+   {% if user.is_authenticated %}
+         <h1>Ваши новости</h1>
+            <ol class="breadcrumb">
+                    <li><a href="{% url 'home' %}">Главная</a></li>
+                    <li><a href="{% url 'my_show' %}">Личный кабинет</a></li>
+                    <li class="active">Мои новости</li>
+                </ol>
+            <hr>
+
+       {% for article in articles %}
+        <h4><a href="{% url 'article' article.id %}">{{ article.title }}</a></h4>
+        <pre>{{ article.get_short_text }}</pre>
+    {% empty %}
+        <h4>Вы еще не создавали новостей!</h4>
+    {% endfor %}
+
+   {% else %}
+    <h1 class="text-center">Вы не вошли на сайт!</h1>
+    {% endif %}
+{% endblock %}

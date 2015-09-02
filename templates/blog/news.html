@@ -1,0 +1,74 @@
+{% extends 'blog/base.html' %}
+{% load humanize %}
+{% load poll_extras %}
+{%  block title %}
+Новости
+{% endblock %}
+
+{%  block content %}
+
+     <h1>Новости</h1>
+            <ol class="breadcrumb">
+                <li><a href="{% url 'home'%}">Главная</a></li>
+                <li class="active">Новости</li>
+            </ol>
+            <hr>
+    {% for article in articles %}
+        <h3 style="word-break: break-all;"><a href="{% url 'article' article.id %}">{{ article.title |truncatechars:50}}</a>
+            {% if article.created_at|is_new_article %}
+                <span class="label label-default">New</span>
+            {% endif %}
+        </h3>
+        <pre>{{ article.get_short_text }}</pre>
+    {% empty %}
+        <h4>Новостей нет:(</h4>
+    {% endfor %}
+    <nav>
+      <ul class="pagination">
+      {% if articles.has_previous %}
+        <li>
+          <a href="?page={{ articles.previous_page_number }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+      {% endif %}
+        </li>
+          {% for i in articles.paginator.page_range %}
+            <li {% if i == articles.number %}class="active" {% endif %}><a href="?page={{ i }}">{{ i }}</a></li>
+          {% endfor %}
+       {% if articles.has_next %}
+        <li>
+          <a href="?page={{ articles.next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+       {% endif %}
+        </li>
+      </ul>
+    </nav>
+
+    <nav>
+      <ul class="pager">
+          {% if articles.has_previous %}
+             <li><a href="?page={{ articles.previous_page_number }}">Previous</a></li>
+          {% endif %}
+          {% if articles.has_next %}
+              <li><a href="?page={{ articles.next_page_number }}">Next</a></li>
+          {% endif %}
+      </ul>
+    </nav>
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if articles.has_previous %}
+                <a href="?page={{ articles.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
+            </span>
+
+            {% if articles.has_next %}
+                <a href="?page={{ articles.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}
