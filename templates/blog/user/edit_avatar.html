@@ -1,0 +1,101 @@
+{% extends 'blog/layout.html' %}
+{% load staticfiles %}
+{% block title %}
+    Загрузка аватара
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 70px;">
+                <h1>Загрузка аватара</h1>
+                <ol class="breadcrumb">
+                    <li><a href="{% url 'home' %}">Главная</a></li>
+                    <li><a href="{% url 'my_show' %}">Личный кабинет</a></li>
+                    <li class="active">Загрузка аватара</li>
+                </ol>
+                <hr>
+                <div class="col-lg-4 col-md-5 col-sm-6 col-xs-6">
+                    {% if avatar_exist %}
+                        <a href="{% static 'blog/img/avatars/' %}{{ request.user.id }}.jpg">
+                            <img src="{% static 'blog/img/avatars/' %}{{ request.user.id }}.jpg"
+                                 class="img-rounded img-responsive" alt="Avatar">
+
+                        </a>
+                        <h4 class="text-center">Размер аватарки {{ avatar_size | filesizeformat  }}.</h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center" style="margin-top:20px;">
+                        <h4>Вы также можете <a href="#"> обрезать изображение</a>.</h4>
+                    </div>
+                    {% else %}
+                       <h3>Вы еще не загружали аватар</h3>
+                    {% endif %}
+                </div>
+
+                <div class="col-lg-8 col-md-7 col-sm-6 col-xs-6">
+                    <form class="form-horizontal" role="form" method="POST" action="/my/edit/avatar/"
+                          enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                            <div class="col-md-12">
+                                <div class="panel-body">
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            {{ form.errors }}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Загрузить аватар</label>
+
+                            <div class="col-md-6" style="margin-top: 20px;">
+                                {{ form.avatar }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Сделать черно-белым</label>
+
+                            <div class="col-md-6" style="margin-top: 20px;">
+                                {{ form.bl_wh }}
+                            </div>
+                        </div>
+                        <!--
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Повернуть изображение</label>
+                            <div class="col-md-6">
+                                    <select class="form-control" name="rotate">
+                                        <option value="0">0&#176</option>
+                                        <option value="1">90&#176</option>
+                                        <option value="2">180&#176</option>
+                                        <option value="3">270&#176</option>
+                                        <option value="4">360&#176</option>
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-2">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="grayscale"> Сделать чёрно-белым
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+-->
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-2 text-center">
+                                <input type="submit" class="btn btn-primary btn-lg" name="submit" value="Загрузить">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h1 class="text-center">Вы не вошли на сайт!</h1>
+    {% endif %}
+{% endblock %}

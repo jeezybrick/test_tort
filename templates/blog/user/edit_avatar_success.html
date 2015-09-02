@@ -1,0 +1,18 @@
+{% extends 'blog/layout.html' %}
+
+{% block title %}
+    Личный кабинет
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+        <div class="alert alert-success text-center" role="alert">
+            <p class="lead">
+                Ваш аватар успешно изменен!
+            </p>
+        </div>
+    {% else %}
+        <h1 class="text-center">Вы не вошли на сайт!</h1>
+    {% endif %}
+{% endblock %}
