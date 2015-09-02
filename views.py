@@ -107,7 +107,7 @@ def my_news(request):
 
 
 def my_edit(request):
-    link_to_avatar = check_if_avatar_exists(request)
+    # link_to_avatar = check_if_avatar_exists(request)
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
         if form.is_valid():
